@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-extern void roll(int num, int *arr)
+ void roll(int num, int *arr)
 {
     srand(time(NULL));
     int i =0;
@@ -26,10 +26,49 @@ void display_dice(int arr[])
     int i=0;
     while (arr[i]!=0&&i<5)
     {
+
         if (i==0)
-            printf("%d", arr[i]);
+            printf("Die #%d: %d", i+1,arr[i]);
         else
-            printf("\t%d", arr[i]);
+            printf("\tDie #%d: %d", i+1,arr[i]);
         i++;
     }
+    
+}
+ int select(int num, int *inb, int *outb)
+{
+    int keep = 0;
+    if (num<5)
+    {
+        printf("\nyour dice\t");
+        display_dice(outb);
+    }
+    printf("\nRolled dice\t");
+    display_dice(inb);
+    while (keep==0)
+    {
+        puts("\nHow many would you like to keep?\n");
+        scanf("%d",&keep);
+        if (keep>num)
+        {
+            puts("you cannot take more dice than are available.\n");
+            keep=0;
+        }
+    }
+    int pulled[keep];
+    for (int i =1; i<=keep; i++)
+    {
+        int pull;
+        printf("select %d of %d, or -1 if you want to change the number of dice you want to keep\n",i,keep);
+        scanf("%d",&pull);
+        if (pull==-1)
+            select(num, *&inb, *&outb);
+        else 
+        {
+            outb[5-num]=inb[pull-1];
+
+        }
+    }
+    return keep;
+
 }

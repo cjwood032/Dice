@@ -15,10 +15,14 @@ Psuedocode
 int main() 
 {
     int dice[5]={0,0,0,0,0};
-    int *parr = NULL;
-    parr = dice;
+    int kept[5]={0,0,0,0,0};
+    int *pdice = NULL;
+    int *pkeep = NULL;
+    pdice = dice;
+    pkeep=kept;
     int count = 5;
-    roll(5, parr);
-    display_dice(dice);
+    roll(count, pdice);
+    count-=select(count, pdice, pkeep);
+    printf("Count is now=%d\n", count);
     return 0;
 }
