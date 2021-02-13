@@ -2,12 +2,13 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-void roll(int num, int **arr[])
+extern void roll(int num, int *arr)
 {
     srand(time(NULL));
-    for (int i=0; i<=num;i++)
+    int i =0;
+    for (; i<=num-1;i++)
     {
-        **arr[i]=rand()%6 + 1;
+        arr[i]=rand()%6 + 1;
     }
 }
 int final_score(int arr[])
@@ -20,14 +21,15 @@ int final_score(int arr[])
     }
     return sum;
 }
-void display_board(int arr[])
+void display_dice(int arr[])
 {
     int i=0;
-    while (arr[i]!=0)
+    while (arr[i]!=0&&i<5)
     {
-        if (i==1)
+        if (i==0)
             printf("%d", arr[i]);
         else
             printf("\t%d", arr[i]);
+        i++;
     }
 }

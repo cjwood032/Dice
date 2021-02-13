@@ -11,3 +11,14 @@ Psuedocode
 
 #include <stdio.h>
 #include "dice.h"
+#include <stdlib.h>
+int main() 
+{
+    int dice[5]={0,0,0,0,0};
+    int *parr = NULL;
+    parr = dice;
+    int count = 5;
+    roll(5, parr);
+    display_dice(dice);
+    return 0;
+}
