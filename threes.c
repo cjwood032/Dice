@@ -21,8 +21,11 @@ int main()
     pdice = dice;
     pkeep=kept;
     int count = 5;
-    roll(count, pdice);
-    count-=select(count, pdice, pkeep);
-    printf("Count is now=%d\n", count);
+    while (count>0)
+    {
+        roll(count, pdice);
+        count-=select(count, pdice, pkeep);
+    }
+    printf("\nYour final score was: %d\n",final_score(kept));
     return 0;
 }

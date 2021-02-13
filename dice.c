@@ -10,6 +10,10 @@
     {
         arr[i]=rand()%6 + 1;
     }
+    for (;i<=5;i++)
+    {
+        arr[i]=0;
+    }
 }
 int final_score(int arr[])
 {
@@ -45,29 +49,36 @@ void display_dice(int arr[])
     }
     printf("\nRolled dice\t");
     display_dice(inb);
-    while (keep==0)
+    if (num>1)
     {
-        puts("\nHow many would you like to keep?\n");
-        scanf("%d",&keep);
-        if (keep>num)
+        while (keep==0)
         {
-            puts("you cannot take more dice than are available.\n");
-            keep=0;
+            puts("\nHow many would you like to keep?\n");
+            scanf("%d",&keep);
+            if (keep>num||keep==0)
+            {
+                puts("you must take at least one and cannot take more dice than are available.\n");
+                keep=0;
+            }
+        }
+        int pulled[keep];
+        for (int i =0; i<keep; i++)
+        {
+            int pull;
+            printf("select %d of %d, or -1 if you want to change the number of dice you want to keep\n",i+1,keep);
+            scanf("%d",&pull);
+            if (pull==-1)
+                select(num, *&inb, *&outb);
+            else 
+            {
+                outb[5-num+i]=inb[pull-1];
+            }
         }
     }
-    int pulled[keep];
-    for (int i =1; i<=keep; i++)
+    else
     {
-        int pull;
-        printf("select %d of %d, or -1 if you want to change the number of dice you want to keep\n",i,keep);
-        scanf("%d",&pull);
-        if (pull==-1)
-            select(num, *&inb, *&outb);
-        else 
-        {
-            outb[5-num]=inb[pull-1];
-
-        }
+        keep=1;
+        outb[4]=inb[0];
     }
     return keep;
 
