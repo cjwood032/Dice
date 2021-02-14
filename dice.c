@@ -65,7 +65,7 @@ void display_dice(int arr[])
         {
             for(int i =0; i<keep; i++)
             {
-                outb[5-num+i]=inb[i-1];
+                outb[5-num+i]=inb[i];
             }
             return keep;
         }

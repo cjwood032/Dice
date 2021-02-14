@@ -15,12 +15,33 @@ Psuedocode
 #include "player.h"
 int main() 
 {
-    int players=0;
-    puts("New game of threes!\nHow many players");
-    struct player p1;
+    
+    int number=0;
+    int low_score=31;
+    puts("New game of threes!\nHow many players?");
+    scanf("%i", &number);
+    fflush(stdin);
+    struct player players[number];
     struct player *p=NULL;
-    p=&p1;
-    makeplayer(p);
-    playerturn(p);
+    for (int i =0;i<number;i++)
+    {
+        struct player pl = players[i];
+        p=&pl;
+        make_player(p);
+        players[i]=*p;
+    }
+    for (int i =0;i<number;i++)
+    {
+        struct player pl = players[i];
+        p=&pl;
+        player_turn(p);
+        if (pl.score < low_score)
+        {
+            low_score=pl.score;
+            printf("New low score of %i\n", low_score);
+        }
+    }
+    
+
     return 0;
 }

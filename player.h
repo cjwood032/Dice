@@ -8,7 +8,7 @@ struct player
     _Bool human;
 
 };
-void makeplayer(struct player *player);
-void playerturn(struct player *player);
+void make_player(struct player *player);
+void player_turn(struct player *player);
 
 #endif// PLR_H_INCLUDED
