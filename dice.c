@@ -61,18 +61,43 @@ void display_dice(int arr[])
                 keep=0;
             }
         }
-        int pulled[keep];
+        if (keep==num)
+        {
+            for(int i =0; i<keep; i++)
+            {
+                outb[5-num+i]=inb[i-1];
+            }
+            return keep;
+        }
+        int pulled[5]={0,0,0,0,0};
         for (int i =0; i<keep; i++)
         {
-            int pull;
-            printf("select %d of %d, or -1 if you want to change the number of dice you want to keep\n",i+1,keep);
-            scanf("%d",&pull);
-            if (pull==-1)
-                select(num, *&inb, *&outb);
-            else 
+            int pull=0;
+            _Bool valid =0;
+            _Bool found = 0;
+            while (!valid)
             {
-                outb[5-num+i]=inb[pull-1];
+                printf("select %d of %d, or -1 if you want to change the number of dice you want to keep\n",i+1,keep);
+                scanf("%d",&pull);
+                if (pull==-1)
+                    select(num, *&inb, *&outb);
+                for (int j=0; j<keep;j++)
+                {
+                    printf("array: %d\n",pulled[j]);
+                    if(pulled[j]==pull)
+                    {
+                        found =1;
+                        printf("you can't select the same die more than once!\n");
+                        break;
+                        
+                    }
+                }
+                if (!found)
+                    valid =1;
             }
+            outb[5-num+i]=inb[pull-1];
+            pulled[i]=pull;
+            
         }
     }
     else
