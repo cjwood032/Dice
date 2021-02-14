@@ -1,7 +1,7 @@
-#ifndef OTHER_H_INCLUDED
-#define OTHER_H_INCLUDED
+#ifndef DICE_H_INCLUDED
+#define DICE_H_INCLUDED
 void roll(int num,int *arr);
 int final_score(int arr[]);
 void display_dice(int arr[]);
 int select(int num, int *inb, int *outb);
-#endif// OTHER_H_INCLUDED
+#endif// DICE_H_INCLUDED

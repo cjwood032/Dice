@@ -12,20 +12,15 @@ Psuedocode
 #include <stdio.h>
 #include "dice.h"
 #include <stdlib.h>
+#include "player.h"
 int main() 
 {
-    int dice[5]={0,0,0,0,0};
-    int kept[5]={0,0,0,0,0};
-    int *pdice = NULL;
-    int *pkeep = NULL;
-    pdice = dice;
-    pkeep=kept;
-    int count = 5;
-    while (count>0)
-    {
-        roll(count, pdice);
-        count-=select(count, pdice, pkeep);
-    }
-    printf("\nYour final score was: %d\n",final_score(kept));
+    int players=0;
+    puts("New game of threes!\nHow many players");
+    struct player p1;
+    struct player *p=NULL;
+    p=&p1;
+    makeplayer(p);
+    playerturn(p);
     return 0;
 }
