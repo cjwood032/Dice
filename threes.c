@@ -41,7 +41,5 @@ int main()
             printf("New low score of %i\n", low_score);
         }
     }
-    
-
     return 0;
 }

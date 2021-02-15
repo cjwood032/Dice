@@ -11,7 +11,6 @@ void make_player(struct player *player)
         puts ("Is this player human or a computer?\n H for human, C for computer");
         scanf("%c",&input);
         fflush(stdin);
-        
     }
     if (toupper(input)=='H')
     {
@@ -41,18 +40,28 @@ void player_turn (struct player *player)
     while (count>0)
     {
         if(toupper(player->name[strlen(player->name)-1])=='S')
-        printf("\n%s' turn!\n",player->name);    
-    else
-        printf("\n%s's turn!\n",player->name);
+        {
+            printf("\n%s' turn!\n",player->name);
+        }
+        else
+        {
+            printf("\n%s's turn!\n",player->name);
+        }
         roll(count, pdice);
         count-=select(count, pdice, pkeep);
     }
     score = final_score(kept);
     player->score= score;
     for (int i = 0; i< 5; i++)
+    {
         player->dice[i]=kept[i];
+    }
     if(toupper(player->name[strlen(player->name)-1])=='S')
+    {
         printf("\n%s' final score was: %d\n",player->name, score);    
+    }
     else
+    {
         printf("\n%s's final score was: %d\n",player->name, score);
+    }
 }
