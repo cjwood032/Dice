@@ -52,16 +52,24 @@ int main()
         if(pl.score==low_score)
         {
             winners++;
-            printf("%s ",pl.name);
+            if (winners==1)
+            {
+                printf("%s",pl.name);
+            }
+            else 
+            {
+                printf(" and %s", pl.name);
+            }
+
         }
     }
     if (winners ==1)
         {
-            printf("is the winner!\n");
+            printf(" is the winner!\n");
         }
         else
         {
-            printf("drew the game!\n");
+            printf(" drew the game!\n");
         }
     return 0;
 }
