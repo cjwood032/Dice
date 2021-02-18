@@ -12,11 +12,13 @@ Psuedocode
 #include <stdio.h>
 #include "dice.h"
 #include <stdlib.h>
+#include <unistd.h>
 #include "player.h"
 int main() 
 {
     
     int number=0;
+    int winners =0;
     int low_score=31;
     puts("New game of threes!\nHow many players?");
     scanf("%i", &number);
@@ -39,7 +41,27 @@ int main()
         {
             low_score=pl.score;
             printf("New low score of %i\n", low_score);
+            sleep(1);
+        }
+            players[i]=pl;
+    }
+    for (int i =0; i<number; i++)
+    {
+        struct player pl = players[i];
+        printf("%s score %d, low score %d\n",pl.name, pl.score,low_score);
+        if(pl.score==low_score)
+        {
+            winners++;
+            printf("%s ",pl.name);
         }
     }
+    if (winners ==1)
+        {
+            printf("is the winner!\n");
+        }
+        else
+        {
+            printf("drew the game!\n");
+        }
     return 0;
 }

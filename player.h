@@ -6,7 +6,6 @@ struct player
     int dice[5];
     int score;
     _Bool human;
-
 };
 void make_player(struct player *player);
 void player_turn(struct player *player);

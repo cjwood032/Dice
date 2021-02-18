@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
 void make_player(struct player *player)
 {
     char input;
@@ -29,13 +30,12 @@ void make_player(struct player *player)
 }
 void player_turn (struct player *player)
 {
-    int dice[5]={0,0,0,0,0};
-    int kept[5]={0,0,0,0,0};
     int *pdice = NULL;
     int *pkeep = NULL;
+    int dice[5]={0,0,0,0,0};
     int score;
     pdice = dice;
-    pkeep=kept;
+    pkeep=player->dice;
     int count = 5;
     while (count>0)
     {
@@ -48,14 +48,10 @@ void player_turn (struct player *player)
             printf("\n%s's turn!\n",player->name);
         }
         roll(count, pdice);
-        count-=select(count, pdice, pkeep);
+        count-=select_dice(count, pdice, pkeep);
     }
-    score = final_score(kept);
+    score = final_score(player->dice);
     player->score= score;
-    for (int i = 0; i< 5; i++)
-    {
-        player->dice[i]=kept[i];
-    }
     if(toupper(player->name[strlen(player->name)-1])=='S')
     {
         printf("\n%s' final score was: %d\n",player->name, score);    

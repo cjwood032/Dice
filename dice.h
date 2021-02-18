@@ -3,5 +3,5 @@
 void roll(int num,int *arr);
 int final_score(int arr[]);
 void display_dice(int arr[]);
-int select(int num, int *inb, int *outb);
+int select_dice(int num, int *inb, int *outb);
 #endif// DICE_H_INCLUDED

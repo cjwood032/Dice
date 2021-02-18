@@ -40,7 +40,7 @@ void display_dice(int arr[])
     }
     
 }
- int select(int num, int *inb, int *outb)
+ int select_dice(int num, int *inb, int *outb)
 {
     int keep = 0;
     if (num<5)
@@ -89,7 +89,7 @@ void display_dice(int arr[])
                 fflush(stdin);
                 if (pull==-1)
                     {
-                        select(num, *&inb, *&outb);
+                        select_dice(num, *&inb, *&outb);
                     }
                 for (int j=0; j<keep;j++)
                 {
