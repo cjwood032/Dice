@@ -27,10 +27,10 @@ int final_score(int arr[])
     }
     return sum;
 }
-void display_dice(int arr[])
+void display_dice(int num, int arr[])
 {
     int i=0;
-    while (arr[i]!=0&&i<5)
+    while (arr[i]!=0&&i<num)
     {
         if (i==0)
             printf("Die #%d: %d", i+1,arr[i]);
@@ -46,10 +46,10 @@ void display_dice(int arr[])
     if (num<5)
     {
         printf("\nyour dice\t");
-        display_dice(outb);
+        display_dice(5-num,outb);
     }
     printf("\nRolled dice\t");
-    display_dice(inb);
+    display_dice(num,inb);
     if (num>1)
     {
         while (keep==0)
