@@ -40,7 +40,7 @@ void display_dice(int num, int arr[])
     }
     
 }
- int select_dice(int num, int *inb, int *outb)
+int select_dice(int num, int *inb, int *outb)
 {
     int keep = 0;
     if (num<5)
@@ -114,6 +114,53 @@ void display_dice(int num, int arr[])
             outb[5-num+i]=inb[pull-1];
             pulled[i]=pull;
             
+        }
+    }
+    else
+    {//if it's the last die there is no choice.
+        keep=1;
+        outb[4]=inb[0];
+    }
+    return keep;
+
+}
+int compute_dice(int num, int *inb, int *outb)
+{
+    int keep = 0;
+    int lowest = 6;
+    int threes = 0;
+    _Bool found_threes = 0;
+    if (num<5)
+    {
+        printf("\ntheir dice\t");
+        display_dice(5-num,outb);
+    }
+    printf("\nRolled dice\t");
+    display_dice(num,inb);
+    if (num>1)
+    {
+        // iterate through get lowest 
+        for (int i = 0;i<num;i++)
+        {
+            if(inb[i]==3)
+            {
+                outb[5-num+threes]=3;
+                threes++;
+                found_threes=1;
+            }
+            else if (inb[i]<lowest) 
+            {
+                lowest = inb[i];
+            }
+        }
+        if(found_threes)
+        {
+            keep = threes;
+        }
+        else
+        {
+            outb[5-num]=lowest;
+            keep=1;
         }
     }
     else

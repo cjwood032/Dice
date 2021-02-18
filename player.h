@@ -9,5 +9,5 @@ struct player
 };
 void make_player(struct player *player);
 void player_turn(struct player *player);
-
+void computer_turn (struct player *player);
 #endif// PLR_H_INCLUDED

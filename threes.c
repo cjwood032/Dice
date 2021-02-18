@@ -36,19 +36,25 @@ int main()
     {
         struct player pl = players[i];
         p=&pl;
-        player_turn(p);
+        if (pl.human)
+        {
+            player_turn(p);
+        }
+        else
+        {
+            computer_turn(p);   
+        }
         if (pl.score < low_score)
         {
             low_score=pl.score;
             printf("New low score of %i\n", low_score);
             sleep(1);
         }
-            players[i]=pl;
+        players[i]=pl;
     }
     for (int i =0; i<number; i++)
     {
         struct player pl = players[i];
-        printf("%s score %d, low score %d\n",pl.name, pl.score,low_score);
         if(pl.score==low_score)
         {
             winners++;
