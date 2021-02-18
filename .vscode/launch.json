@@ -7,8 +7,16 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Launch",
+            "program": "${workspaceFolder}/sevens",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/threes",
+            "program": "${workspaceFolder}/sevens",
             "args": [],
             "cwd": "${workspaceFolder}"
         }

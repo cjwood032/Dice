@@ -53,8 +53,7 @@ int main()
                 printf("%s is out!\n",pl.name);
                 if(--remaining==1)
                 {
-                    printf("Good game!");
-                    exit(0);
+                    break;
                 }
                 printf("Leaving %d player(s)\n",remaining);
             }
@@ -69,6 +68,7 @@ int main()
             count++;
         }
     }
-    
-    return 0;
+    printf("Good game!\n");
+
+   exit(0);
 }
