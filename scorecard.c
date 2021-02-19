@@ -49,6 +49,8 @@
 #define YTZBONUS_SCORE card->yahtzee_bonus_score
 #define TOP_COMPLETED (ACES && TWOS && THREES && FOURS && FIVES && SIXES)
 #define BOT_COMPLETED (TRIPS && QUADS && FULLH && SMSTR && LGSTR && YAHT && CHANCE) 
+#define GRAND_TOTAL card->grand_total
+#define BOT_TOTAL card->lower_total
 void init_card(struct scorecard *card)
 {
     struct player *p = NULL;
@@ -134,8 +136,11 @@ void display_scorecard(struct scorecard *card)
     printf("||\tYahtzee bonus\t|\t%d points\t|\t",YAHTZEEBONUS);
     YTZBONUS ? printf("%d\t||\n",YTZBONUS_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
-    printf("||\tyahtzee\t\t|\t%d points\t|\t",YAHTZEE);
-    YAHT ? printf("%d\t||\n",YAHT_SCORE) :printf("X\t||\n");
+    printf("||\tBottom score\t|\tsum of bottom\t|\t");
+    BOT_COMPLETED ? printf("%d\t||\n",BOT_TOTAL) :printf("X\t||\n");
+    printf("------------------------------------------------------------------\n");
+    printf("||\tTotal score\t|\tgrand total\t|\t");
+    BOT_COMPLETED&&TOP_COMPLETED ? printf("%d\t||\n",GRAND_TOTAL) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
     printf("------------------------------------------------------------------\n");
 }
