@@ -39,5 +39,8 @@ struct scorecard
     int lower_total;
     int grand_total;
 };
+
+void init_card(struct scorecard *card);
+void score_top(int selection, struct scorecard *card);
 void total_top(struct scorecard *card);
 #endif
