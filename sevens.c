@@ -46,17 +46,19 @@ int main()
             sleep(1);
             roll(2,pdice);
             printf("%s last roll totaled: %d\n",pl.name,pl.score);
-            score = dice[0]+dice[1];
-            pl.score=score;
+            pl.score=score = dice[0]+dice[1];
             printf("%s roll: %d+%d=%d\n",pl.name,dice[0],dice[1],score);
             if (score==7)
             {
                 printf("%s is out!\n",pl.name);
                 if(--remaining==1)
                 {
-                    //break;
+                    printf("Leaving %d player\n",remaining);
                 }
-                printf("Leaving %d player(s)\n",remaining);
+                else
+                {
+                    printf("Leaving %d players\n",remaining);
+                }
             }
         }
         players[count]=pl;
@@ -70,6 +72,5 @@ int main()
         }
     }
     printf("Good game!\n");
-
    return 0;
 }

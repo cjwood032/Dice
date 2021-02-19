@@ -2,7 +2,7 @@
 #define CARD_H_INCLUDED
 struct scorecard 
 {
-    struct player;
+    struct player playerinfo;
     _Bool Aces;
     int aces_score;
     _Bool Twos;
@@ -17,11 +17,12 @@ struct scorecard
     int sixes_score;
     int top_subtotal;
     _Bool TopBonus;
+    int top_bonus;
     int top_total;
-    _Bool ThreeOaK;
-    int threeOaK_total;
-    _Bool FourOaK;
-    int fourOaK_total;
+    _Bool Trips;
+    int trips_total;
+    _Bool Quads;
+    int quads_total;
     _Bool FullHouse;
     int full_house_score;
     _Bool SmStraight;
@@ -37,9 +38,6 @@ struct scorecard
     int yahtzee_bonus_score;
     int lower_total;
     int grand_total;
-
-
-
-
-}
+};
+void total_top(struct scorecard *card);
 #endif

@@ -9,7 +9,7 @@ int main(){
     int number=0;
     int winners =0;
     int low_score=31;
-    puts("New game of threes!\nHow many players?");
+    puts("New game of not Yahtzee!\nHow many players?");
     scanf("%i", &number);
     fflush(stdin);
     struct player players[number];
