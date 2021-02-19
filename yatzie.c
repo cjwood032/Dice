@@ -5,38 +5,33 @@
 #include "player.h"
 #include "scorecard.h"
 int main()
-{    
-    int number=0;
-    int winners =0;
-    int low_score=31;
+{
+    int number = 0;
+    int winners = 0;
+    int low_score = 31;
     puts("New game of not Yahtzee!\nHow many players?");
     scanf("%i", &number);
     fflush(stdin);
     struct scorecard cards[number];
     struct scorecard *pcard = NULL;
     struct player *player = NULL;
-    for (int i =0;i<number;i++)
+    for (int i = 0; i < number; i++)
     {
         struct scorecard sc = cards[i];
-        pcard=&sc;
-        
+        pcard = &sc;
+
         init_card(pcard);
-        cards[i]=*pcard;
+        cards[i] = *pcard;
     }
-    for (int i =0;i<number;i++)
+    for (int i = 0; i < number; i++)
     {
         struct scorecard sc = cards[i];
-        pcard=&sc;
-        player= sc.playerinfo;
+        pcard = &sc;
+        player = sc.playerinfo;
         // hard code attempt pass
-        player->dice[0]=1;
-        player->dice[1]=1;
-        player->dice[2]=3;
-        player->dice[3]=5;
-        player->dice[4]=4;
-        
-        
+
         //roll(5,player->dice);
+        /* Print dice
         printf("[ ");
         
         for (int j =0; j<5; j++)
@@ -47,18 +42,45 @@ int main()
             printf(", %d",player->dice[j]);
         }
         printf("]\n");
-        //score_top(1,pcard);
-        printf("ACES %d\n",sc.Aces);
-        score_top(2,pcard);
-        score_top(3,pcard);
-        //score_top(4,pcard);
-        score_top(5,pcard);
-        score_top(6,pcard);
-        display_scorecard(pcard);
-        
-        
+        */
+        player->dice[0] = 1;
+        player->dice[1] = 1;
+        player->dice[2] = 1;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_top(1, pcard);
+        player->dice[0] = 2;
+        player->dice[1] = 2;
+        player->dice[2] = 2;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_top(2, pcard);
+        player->dice[0] = 3;
+        player->dice[1] = 3;
+        player->dice[2] = 3;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_top(3, pcard);
+        player->dice[0] = 4;
+        player->dice[1] = 4;
+        player->dice[2] = 1;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_top(4, pcard);
+        player->dice[0] = 5;
+        player->dice[1] = 5;
+        player->dice[2] = 1;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_top(5, pcard);
+        player->dice[0] = 6;
+        player->dice[1] = 6;
+        player->dice[2] = 6;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_top(6, pcard);
 
-       /*
+        /*
         if (sc.playerinfo->human)
         {
             
@@ -75,9 +97,8 @@ int main()
             sleep(1);
         }
         */
-        cards[i]=sc;
+        cards[i] = sc;
     }
-    
-    
+
     return 0;
 }

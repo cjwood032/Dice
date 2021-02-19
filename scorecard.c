@@ -47,6 +47,8 @@
 #define YTZBONUS card->YahtzeeBonus
 #define XTRAYTZ card->yahtzee_bonuses
 #define YTZBONUS_SCORE card->yahtzee_bonus_score
+#define TOP_COMPLETED (ACES && TWOS && THREES && FOURS && FIVES && SIXES)
+#define BOT_COMPLETED (TRIPS && QUADS && FULLH && SMSTR && LGSTR && YAHT && CHANCE) 
 void init_card(struct scorecard *card)
 {
     struct player *p = NULL;
@@ -96,6 +98,15 @@ void display_scorecard(struct scorecard *card)
     printf("||\tSixes(6 pip)\t|\tsum of sixes\t|\t");
     SIXES ? printf("%d\t||\n",SIXES_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
+    printf("||\tsubtotal\t|\tsum of top\t|\t");
+    TOP_COMPLETED ? printf("%d\t||\n",TOP_SUB) :printf("X\t||\n");
+    printf("------------------------------------------------------------------\n");
+    printf("||\ttop bonus\t|\tif sum >= 63 \t|\t");
+    TOP_BONUS ? printf("%d\t||\n",TOP_BONUS_SCORE) :printf("X\t||\n");
+    printf("------------------------------------------------------------------\n");
+    printf("||\ttotal score\t|\tsub + bonus\t|\t");
+    TOP_COMPLETED ? printf("%d\t||\n",TOP_TOTAL) :printf("X\t||\n");
+    printf("------------------------------------------------------------------\n");
     printf("------------------------------------------------------------------\n");
     printf("||\tLOWER SECTION\t|\tHOW TO SCORE\t|\tSCORE\t||\n");
     printf("------------------------------------------------------------------\n");
@@ -105,20 +116,26 @@ void display_scorecard(struct scorecard *card)
     printf("||\tfour of a kind\t|\tsum of all dice\t|\t");
     QUADS ? printf("%d\t||\n",QUADS_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
-    printf("||\tfull house\t|\t%d\t|\t",FULLHOUSE);
+    printf("||\tfull house\t|\t%d points\t|\t",FULLHOUSE);
     FULLH ? printf("%d\t||\n",FULLH_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
-    printf("||\tsmall staight\t|\t%d\t|\t",SMSTRAIGHT);
+    printf("||\tsmall staight\t|\t%d points\t|\t",SMSTRAIGHT);
     SMSTR ? printf("%d\t||\n",SMSTR_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
-    printf("||\tlarge straight\t|\t%d\t|\t",LGSTRAIGHT);
+    printf("||\tlarge straight\t|\t%d points\t|\t",LGSTRAIGHT);
     LGSTR ? printf("%d\t||\n",LGSTR) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
-    printf("||\tyahtzee\t\t|\t%d\t|\t",YAHTZEE);
+    printf("||\tyahtzee\t\t|\t%d points\t|\t",YAHTZEE);
     YAHT ? printf("%d\t||\n",YAHT_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
-    printf("||\tYahtzee bonus\t|\t%d\t|\t",YAHTZEEBONUS);
+    printf("||\tchance\t\t|\tsum of all dice\t|\t");
+    CHANCE ? printf("%d\t||\n",CHANCE_SCORE) :printf("X\t||\n");
+    printf("------------------------------------------------------------------\n");
+    printf("||\tYahtzee bonus\t|\t%d points\t|\t",YAHTZEEBONUS);
     YTZBONUS ? printf("%d\t||\n",YTZBONUS_SCORE) :printf("X\t||\n");
+    printf("------------------------------------------------------------------\n");
+    printf("||\tyahtzee\t\t|\t%d points\t|\t",YAHTZEE);
+    YAHT ? printf("%d\t||\n",YAHT_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
     printf("------------------------------------------------------------------\n");
 }
@@ -137,38 +154,37 @@ void score_top(int selection, struct scorecard *card)
     case 1:
         ACES = 1;
         ACES_SCORE = count;
-        printf("Aces score: %d\n",count);
         break;
     case 2:
         TWOS = 1;
         TWOS_SCORE = count * selection;
-        printf("twos score: %d\n",TWOS_SCORE);
         break;
     case 3:
         THREES = 1;
         THREES_SCORE = count * selection;
-        printf("threes score: %d\n",THREES_SCORE);
         break;
     case 4:
         FOURS = 1;
         FOURS_SCORE = count * selection;
-        printf("fours score: %d\n",FOURS_SCORE);
         break;
     case 5:
         FIVES = 1;
         FIVES_SCORE = count * selection;
-        printf("fives score: %d\n",FIVES_SCORE);
     break;
     case 6:
         SIXES = 1;
         SIXES_SCORE = count * selection;
-        printf("sixes score: %d\n",SIXES_SCORE);
     break;
     }
+    if TOP_COMPLETED
+    {
+        total_top(card);
+    }
+    display_scorecard(card);
 }
 void total_top(struct scorecard *card)
 {
-    if (ACES && TWOS && THREES && FOURS && FIVES && SIXES)
+    if TOP_COMPLETED
     {
         TOP_BONUS = 1;
         TOP_SUB = ACES_SCORE + TWOS_SCORE + THREES_SCORE + FOURS_SCORE + FIVES_SCORE + SIXES_SCORE;
