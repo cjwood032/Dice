@@ -10,10 +10,7 @@
     {
         arr[i]=rand()%6 + 1;
     }
-    for (;i<=5;i++)
-    {
-        arr[i]=0;
-    }
+    
 }
 int final_score(int arr[])
 {

@@ -14,6 +14,7 @@ Psuedocode
 #include <stdlib.h>
 #include <unistd.h>
 #include "player.h"
+#include <time.h>
 int main() 
 {
     int number=0;  
@@ -53,7 +54,7 @@ int main()
                 printf("%s is out!\n",pl.name);
                 if(--remaining==1)
                 {
-                    break;
+                    //break;
                 }
                 printf("Leaving %d player(s)\n",remaining);
             }
@@ -70,5 +71,5 @@ int main()
     }
     printf("Good game!\n");
 
-   exit(0);
+   return 0;
 }
