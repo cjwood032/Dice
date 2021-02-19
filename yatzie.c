@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "player.h"
-
+#include "scorecard.h"
 int main(){
     
     int number=0;
@@ -12,48 +12,52 @@ int main(){
     puts("New game of not Yahtzee!\nHow many players?");
     scanf("%i", &number);
     fflush(stdin);
-    struct player players[number];
-    struct player *p=NULL;
+    struct scorecard cards[number];
+    struct scorecard *pcard = NULL;
+    struct player *player = NULL;
     for (int i =0;i<number;i++)
     {
-        struct player pl = players[i];
-        p=&pl;
-        make_player(p);
-        players[i]=*p;
+        struct scorecard sc = cards[i];
+        pcard=&sc;
+        
+        init_card(pcard);
+        cards[i]=*pcard;
     }
     for (int i =0;i<number;i++)
     {
-        struct player pl = players[i];
-        p=&pl;
-        if (pl.human)
+        struct scorecard sc = cards[i];
+        pcard=&sc;
+        player= sc.playerinfo;
+        if (sc.playerinfo->human)
         {
-            player_turn(p);
+            
+            player_turn(player);
         }
         else
         {
-            computer_turn(p);   
+            computer_turn(player);   
         }
-        if (pl.score < low_score)
+        if (pcard->playerinfo->score < low_score)
         {
-            low_score=pl.score;
+            low_score=pcard->playerinfo->score;
             printf("New low score of %i\n", low_score);
             sleep(1);
         }
-        players[i]=pl;
+        cards[i]=sc;
     }
     for (int i =0; i<number; i++)
     {
-        struct player pl = players[i];
-        if(pl.score==low_score)
+        struct scorecard sc = cards[i];
+        if(sc.playerinfo->score==low_score)
         {
             winners++;
             if (winners==1)
             {
-                printf("%s",pl.name);
+                printf("%s",sc.playerinfo->name);
             }
             else 
             {
-                printf(" and %s", pl.name);
+                printf(" and %s", sc.playerinfo->name);
             }
 
         }

@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
-#define DICE card->playerinfo.dice
+#define DICE card->playerinfo->dice
 #define ACES card->Aces
 #define TWOS card->Twos
 #define THREES card->Threes
@@ -34,9 +34,9 @@
 void init_card(struct scorecard *card)
 {
     struct player *p = NULL;
-    p = &card->playerinfo;
+    p = card->playerinfo;
     make_player(p);
-    card->playerinfo = *p;
+    card->playerinfo = p;
 }
 void score_top(int selection, struct scorecard *card)
 {

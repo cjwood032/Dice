@@ -2,7 +2,7 @@
 #define CARD_H_INCLUDED
 struct scorecard 
 {
-    struct player playerinfo;
+    struct player *playerinfo;
     _Bool Aces;
     int aces_score;
     _Bool Twos;
