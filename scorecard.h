@@ -41,6 +41,8 @@ struct scorecard
 };
 
 void init_card(struct scorecard *card);
+void display_scorecard(struct scorecard *card);
 void score_top(int selection, struct scorecard *card);
 void total_top(struct scorecard *card);
+void score_dice(struct scorecard *card);
 #endif

@@ -1,4 +1,5 @@
 #include "dice.h"
+
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -168,3 +169,4 @@ int compute_dice(int num, int *inb, int *outb)
     return keep;
 
 }
+
