@@ -71,7 +71,22 @@
         if(((DICE[0]==DICE[1]&&DICE[1]==DICE[2])&&(DICE[3]==DICE[4]))||((DICE[2]==DICE[3]&&DICE[4]==DICE[2])&&(DICE[0]==DICE[1])))\
         {\
             found=1;\
+        }   
+#define CHECKY _Bool found =0; \
+        if(DICE[0]==DICE[1]&&DICE[2]==DICE[3]&&DICE[3]==DICE[4]&&DICE[4]==DICE[0])\
+        {\
+        found =1;\
         }
+#define CHECKSM _Bool found =0;\
+    if (DICE[0]+1==DICE[1]&&DICE[1]+1==DICE[2]&&DICE[2]+1==DICE[3]||DICE[1]+1==DICE[2]&&DICE[2]+1==DICE[3]&&DICE[3]+1==DICE[4])\
+    {\
+    found=1;\
+    }
+#define CHECKLG _Bool found =0;\
+    if (DICE[0]+1==DICE[1]&&DICE[1]+1==DICE[2]&&DICE[2]+1==DICE[3]&&DICE[3]+1==DICE[4])\
+    {\
+    found=1;\
+    }
 int cmpfunc (const void * a, const void * b)
 {
    return ( *(int*)a - *(int*)b );
@@ -153,7 +168,7 @@ void display_scorecard(struct scorecard *card)
     SMSTR ? printf("%d\t||\n",SMSTR_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
     printf("||\tlarge straight\t|\t%d points\t|\t",LGSTRAIGHT);
-    LGSTR ? printf("%d\t||\n",LGSTR) :printf("X\t||\n");
+    LGSTR ? printf("%d\t||\n",LGSTR_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
     printf("||\tyahtzee\t\t|\t%d points\t|\t",YAHTZEE);
     YAHT ? printf("%d\t||\n",YAHT_SCORE) :printf("X\t||\n");
@@ -274,6 +289,49 @@ void score_bot(char str[],struct scorecard *card)
         else
         {
             FULLH_SCORE=0;
+        }
+    }
+    else if (strcmp(str, "small")==0)
+    {
+        SMSTR=1;
+        qsort(DICE, 5, sizeof(int), cmpfunc);
+        CHECKSM
+        if(found)
+        {
+            SMSTR_SCORE=SMSTRAIGHT;
+        }
+        else
+        {
+            SMSTR_SCORE=0;
+        }
+    }
+    else if (strcmp(str, "large")==0)
+    {
+        LGSTR=1;
+        qsort(DICE, 5, sizeof(int), cmpfunc);
+        CHECKLG
+        if(found)
+        {
+            LGSTR_SCORE=LGSTRAIGHT;
+        }
+        else
+        {
+            LGSTR_SCORE=0;
+        }
+    }
+    else if (strcmp(str,"yahtzee")==0)
+    {
+        YAHT=1;
+        CHECKY
+        if (found)
+        {
+            YAHT_SCORE=YAHTZEE;
+        }
+        else
+        {
+            YAHT_SCORE=0;
+            YTZBONUS=1;
+            YTZBONUS_SCORE=0;
         }
     }
     else if(strcmp(str, "chance")==0)
