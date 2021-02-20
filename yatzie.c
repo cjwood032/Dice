@@ -36,13 +36,14 @@ int main()
         
         for (int j =0; j<5; j++)
         {
-             if (i==0)
+             if (j==0)
             printf("%d ",player->dice[j]);
         else
             printf(", %d",player->dice[j]);
         }
         printf("]\n");
         */
+       /*
         player->dice[0] = 1;
         player->dice[1] = 1;
         player->dice[2] = 1;
@@ -79,7 +80,21 @@ int main()
         player->dice[3] = 5;
         player->dice[4] = 4;
         score_top(6, pcard);
-
+        */
+       /*
+        player->dice[0] = 6;
+        player->dice[1] = 6;
+        player->dice[2] = 6;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_bot("three",pcard);
+        */
+        player->dice[0] = 5;
+        player->dice[1] = 5;
+        player->dice[2] = 5;
+        player->dice[3] = 5;
+        player->dice[4] = 4;
+        score_bot("four",pcard);
         /*
         if (sc.playerinfo->human)
         {

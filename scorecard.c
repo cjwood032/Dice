@@ -51,6 +51,26 @@
 #define BOT_COMPLETED (TRIPS && QUADS && FULLH && SMSTR && LGSTR && YAHT && CHANCE) 
 #define GRAND_TOTAL card->grand_total
 #define BOT_TOTAL card->lower_total
+#define ADD_DICE (DICE[0]+DICE[1]+DICE[2]+DICE[3]+DICE[4])
+#define CHECK3 _Bool found = 0; \
+        for(int x =0; x<3; x++)\
+        {\
+        if(DICE[x]==DICE[x+1]&&DICE[x]==DICE[x+2])\
+            found=1;\
+        }
+#define CHECK4 _Bool found = 0; \
+        for(int x =0; x<2; x++)\
+        {\
+        if(DICE[x]==DICE[x+1]&&DICE[x]==DICE[x+2]&&DICE[x]==DICE[x+3])\
+            found=1;\
+        }        
+int cmpfunc (const void * a, const void * b)
+{
+   return ( *(int*)a - *(int*)b );
+}
+
+    
+
 void init_card(struct scorecard *card)
 {
     struct player *p = NULL;
@@ -203,6 +223,35 @@ void total_top(struct scorecard *card)
         }
         TOP_TOTAL = TOP_SUB + TOP_BONUS_SCORE;
     }
+}
+void score_bot(char str[],struct scorecard *card)
+{
+    if(strcmp(str, "three")==0)
+    {
+        qsort(DICE, 5, sizeof(int), cmpfunc);
+        CHECK3
+        TRIPS=1;
+        if(found)
+        {
+            TRIPS_SCORE=ADD_DICE;
+        }
+    }
+    else if(strcmp(str, "four")==0)
+    {
+        qsort(DICE, 5, sizeof(int), cmpfunc);
+        CHECK4
+        QUADS=1;
+        if(found)
+        {
+            QUADS_SCORE=ADD_DICE;
+        }
+    }
+    else if(strcmp(str, "chance")==0)
+    {
+        CHANCE=1;
+        CHANCE_SCORE=ADD_DICE;
+    }
+    display_scorecard(card);
 }
 void score_dice(struct scorecard *card)
 {
