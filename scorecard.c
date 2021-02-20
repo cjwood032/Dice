@@ -55,15 +55,23 @@
 #define CHECK3 _Bool found = 0; \
         for(int x =0; x<3; x++)\
         {\
-        if(DICE[x]==DICE[x+1]&&DICE[x]==DICE[x+2])\
-            found=1;\
+            if(DICE[x]==DICE[x+1]&&DICE[x]==DICE[x+2])\
+            {\
+                found=1;\
+            }\
         }
 #define CHECK4 _Bool found = 0; \
         for(int x =0; x<2; x++)\
         {\
-        if(DICE[x]==DICE[x+1]&&DICE[x]==DICE[x+2]&&DICE[x]==DICE[x+3])\
+            if(DICE[x]==DICE[x+1]&&DICE[x]==DICE[x+2]&&DICE[x]==DICE[x+3])  {\
+                found=1;\
+            }\
+        }
+#define CHECKH _Bool found = 0; \
+        if(((DICE[0]==DICE[1]&&DICE[1]==DICE[2])&&(DICE[3]==DICE[4]))||((DICE[2]==DICE[3]&&DICE[4]==DICE[2])&&(DICE[0]==DICE[1])))\
+        {\
             found=1;\
-        }        
+        }
 int cmpfunc (const void * a, const void * b)
 {
    return ( *(int*)a - *(int*)b );
@@ -235,6 +243,10 @@ void score_bot(char str[],struct scorecard *card)
         {
             TRIPS_SCORE=ADD_DICE;
         }
+        else
+        {
+            TRIPS_SCORE=0;
+        }
     }
     else if(strcmp(str, "four")==0)
     {
@@ -244,6 +256,24 @@ void score_bot(char str[],struct scorecard *card)
         if(found)
         {
             QUADS_SCORE=ADD_DICE;
+        }
+        else
+        {
+            QUADS_SCORE=0;
+        }
+    }
+    else if(strcmp(str, "house")==0)
+    {
+        qsort(DICE, 5, sizeof(int), cmpfunc);
+        CHECKH
+        FULLH=1;
+        if(found)
+        {
+            FULLH_SCORE=FULLHOUSE;
+        }
+        else
+        {
+            FULLH_SCORE=0;
         }
     }
     else if(strcmp(str, "chance")==0)

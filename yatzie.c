@@ -90,11 +90,11 @@ int main()
         score_bot("three",pcard);
         */
         player->dice[0] = 5;
-        player->dice[1] = 5;
+        player->dice[1] = 4;
         player->dice[2] = 5;
         player->dice[3] = 5;
         player->dice[4] = 4;
-        score_bot("four",pcard);
+        score_bot("house",pcard);
         /*
         if (sc.playerinfo->human)
         {
