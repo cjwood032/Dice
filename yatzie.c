@@ -19,9 +19,9 @@ int main()
     {
         struct scorecard sc = cards[i];
         pcard = &sc;
-
         init_card(pcard);
         cards[i] = *pcard;
+        printf("%s name\n",pcard->playerinfo->name);
     }
     for (int i = 0; i < number; i++)
     {
@@ -43,7 +43,7 @@ int main()
         }
         printf("]\n");
         */
-       /*
+       
         player->dice[0] = 1;
         player->dice[1] = 1;
         player->dice[2] = 1;
@@ -77,10 +77,11 @@ int main()
         player->dice[0] = 6;
         player->dice[1] = 6;
         player->dice[2] = 6;
-        player->dice[3] = 5;
+        player->dice[3] = 6;
         player->dice[4] = 4;
         score_top(6, pcard);
-        */
+        score_bot("three",pcard);
+        score_bot("four",pcard);
        /*
         player->dice[0] = 6;
         player->dice[1] = 6;
@@ -89,13 +90,18 @@ int main()
         player->dice[4] = 4;
         score_bot("three",pcard);
         */
-        player->dice[0] = 1;
-        player->dice[1] = 4;
+        player->dice[0] = 5;
+        player->dice[1] = 5;
         player->dice[2] = 5;
-        player->dice[3] = 2;
-        player->dice[4] = 3;
+        player->dice[3] = 5;
+        player->dice[4] = 5;
+        
+        score_bot("yahtzee",pcard);
+        score_bot("house",pcard);
         score_bot("small",pcard);
         score_bot("large",pcard);
+        score_bot("yahtzee",pcard);
+        score_bot("chance",pcard);
         /*
         if (sc.playerinfo->human)
         {

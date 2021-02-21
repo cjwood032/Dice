@@ -1,3 +1,4 @@
+
 #define TOPBONUS 35
 #define FULLHOUSE 25
 #define SMSTRAIGHT 30
@@ -87,6 +88,8 @@
     {\
     found=1;\
     }
+
+
 int cmpfunc (const void * a, const void * b)
 {
    return ( *(int*)a - *(int*)b );
@@ -96,10 +99,13 @@ int cmpfunc (const void * a, const void * b)
 
 void init_card(struct scorecard *card)
 {
-    struct player *p = NULL;
+    struct player *p;
     p = card->playerinfo;
     make_player(p);
     card->playerinfo = p;
+    char *name = p->name;
+    card->playerinfo =malloc(sizeof(struct player));
+    strcpy(card -> playerinfo->name,name);
     ACES =0;
     TWOS=0;
     THREES=0;
@@ -117,11 +123,13 @@ void init_card(struct scorecard *card)
     YTZBONUS=0;
     XTRAYTZ=0;
     YTZBONUS_SCORE=0;
-
+    free(card->playerinfo);
+    
 }
 void display_scorecard(struct scorecard *card)
 {
     printf("------------------------------------------------------------------\n");
+    printf("||\t\t\t\t%s\t\t\t\t||\n",card->playerinfo->name);
     printf("------------------------------------------------------------------\n");
     printf("||\tUPPER SECTION\t|\tHOW TO SCORE\t|\tSCORE\t||\n");
     printf("------------------------------------------------------------------\n");
@@ -176,8 +184,11 @@ void display_scorecard(struct scorecard *card)
     printf("||\tchance\t\t|\tsum of all dice\t|\t");
     CHANCE ? printf("%d\t||\n",CHANCE_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
+    printf("||\tYahtzee bonuses\t|\textra yahtzees\t|\t");
+    YAHT ? printf("%d\t||\n",XTRAYTZ) :printf("X\t||\n");
+    printf("------------------------------------------------------------------\n");
     printf("||\tYahtzee bonus\t|\t%d points\t|\t",YAHTZEEBONUS);
-    YTZBONUS ? printf("%d\t||\n",YTZBONUS_SCORE) :printf("X\t||\n");
+    BOT_COMPLETED ? printf("%d\t||\n",YTZBONUS_SCORE) :printf("X\t||\n");
     printf("------------------------------------------------------------------\n");
     printf("||\tBottom score\t|\tsum of bottom\t|\t");
     BOT_COMPLETED ? printf("%d\t||\n",BOT_TOTAL) :printf("X\t||\n");
@@ -245,6 +256,10 @@ void total_top(struct scorecard *card)
             TOP_BONUS_SCORE = 0;
         }
         TOP_TOTAL = TOP_SUB + TOP_BONUS_SCORE;
+        if (BOT_COMPLETED)
+        {
+            GRAND_TOTAL=TOP_TOTAL+BOT_TOTAL;
+        }
     }
 }
 void score_bot(char str[],struct scorecard *card)
@@ -321,14 +336,20 @@ void score_bot(char str[],struct scorecard *card)
     }
     else if (strcmp(str,"yahtzee")==0)
     {
-        YAHT=1;
+        
         CHECKY
-        if (found)
+        if (found&&!YAHT)
         {
+            YAHT=1;
             YAHT_SCORE=YAHTZEE;
+        }
+        else if (found && YAHT)
+        {
+            XTRAYTZ++;
         }
         else
         {
+            YAHT=1;
             YAHT_SCORE=0;
             YTZBONUS=1;
             YTZBONUS_SCORE=0;
@@ -339,7 +360,23 @@ void score_bot(char str[],struct scorecard *card)
         CHANCE=1;
         CHANCE_SCORE=ADD_DICE;
     }
+    if(BOT_COMPLETED)
+    {
+        total_bot(card);
+    }
     display_scorecard(card);
+}
+void total_bot(struct scorecard *card)
+{
+    if(BOT_COMPLETED)
+    {
+        YTZBONUS_SCORE=YAHTZEEBONUS*XTRAYTZ;
+        BOT_TOTAL= THREES_SCORE+FOURS_SCORE+FULLH_SCORE+SMSTR_SCORE+LGSTR_SCORE+YAHT_SCORE+CHANCE_SCORE+YTZBONUS_SCORE;
+        if (TOP_COMPLETED)
+        {
+            GRAND_TOTAL=TOP_TOTAL+BOT_TOTAL;
+        }
+    }
 }
 void score_dice(struct scorecard *card)
 {
