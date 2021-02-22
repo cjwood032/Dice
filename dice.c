@@ -1,5 +1,5 @@
 #include "dice.h"
-
+#include <string.h>
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -170,3 +170,58 @@ int compute_dice(int num, int *inb, int *outb)
 
 }
 
+int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
+{
+    int move = 0;
+    
+    char input[5];
+    printf("rolled");
+    display_dice(inL,inb);
+    if(outL)
+    {
+        printf("\nheld");
+        display_dice(outL,outb);
+    }
+    
+    printf("\nwhat would you like to swap or woukld you like to (S)top?\n(R)olled or (H)eld + the die number you wish to swap\nex.\"R1\" would hold the first rolled die\n");
+    scanf("%s",input);
+    if(strncmp("R",input,1)==0)
+    {
+        input[0]=' ';
+        move=atoi(input)-1;
+        if(move<inL)
+        {
+            outb[outL]=inb[move];
+            printf("pulled %d\n",outb[outL]);
+            for (int count = move;count<inL-1;count++) //move the dice
+            {
+                inb[count] = inb[count+1];
+            }
+            inL--;
+            outL++;
+            swapped++;
+        }
+
+    }
+    else if(strncmp("H",input,1)==0)
+    {
+        input[0]=' ';
+        move=atoi(input)-1;
+        if(move<outL)
+        {
+            inb[inL]=outb[move];
+            for (int count = move;count<outL-1;count++) //move the dice
+            {
+                outb[count] = outb[count+1];
+            }
+            inL++;
+            outL--;
+            swapped--;
+        }
+    }
+    else if(strncmp("D",input,1)==0)
+    {
+        return swapped;
+    }
+    return swap_dice(inb,inL,outb,outL,swapped);
+}

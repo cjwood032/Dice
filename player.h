@@ -4,6 +4,7 @@ struct player
 {
     char name[20];
     int dice[5];
+    int rolled[5];
     int score;
     _Bool human;
 };

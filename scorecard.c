@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#define ROLLED card->playerinfo->rolled
 #define DICE card->playerinfo->dice
 #define ACES card->Aces
 #define TWOS card->Twos
@@ -106,6 +107,11 @@ void init_card(struct scorecard *card)
     char *name = p->name;
     card->playerinfo =malloc(sizeof(struct player));
     strcpy(card -> playerinfo->name,name);
+    ROLLED[0]=0;
+    ROLLED[1] =0;
+    ROLLED[2] =0;
+    ROLLED[3]=0;
+    ROLLED[4]=0;
     ACES =0;
     TWOS=0;
     THREES=0;
