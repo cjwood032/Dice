@@ -29,7 +29,7 @@ int main()
     {
         struct player pl = players[i];
         p=&pl;
-        make_player(p);
+        make_player(p,1);
         players[i]=*p;
     }
     for (int i =0;i<number;i++)

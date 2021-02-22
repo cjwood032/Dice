@@ -102,7 +102,7 @@ void init_card(struct scorecard *card)
 {
     struct player *p;
     p = card->playerinfo;
-    make_player(p);
+    make_player(p,0);
     card->playerinfo = p;
     char *name = p->name;
     card->playerinfo =malloc(sizeof(struct player));

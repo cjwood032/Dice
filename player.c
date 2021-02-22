@@ -8,16 +8,16 @@
 #include <time.h>
 const char *Names[10] = {"Bill", "Karen", "Ada", "Buzz", "Brian","Sophie","Edward","Marie","Susan","Paul"};
  
-void make_player(struct player *player)
+void make_player(struct player *player, _Bool option)
 {
     char input;
-    while(input!='C'&&input!='H')
+    while(input!='C'&&input!='H'&&option)
     {
         puts ("Is this player human or a computer?\nH for human, C for computer");
         scanf("%c",&input);
         fflush(stdin);
     }
-    if (toupper(input)=='H')
+    if (toupper(input)=='H'||!option)
     {
         input='X';
         char name[20];

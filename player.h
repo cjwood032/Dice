@@ -8,7 +8,7 @@ struct player
     int score;
     _Bool human;
 };
-void make_player(struct player *player);
+void make_player(struct player *player, _Bool option);
 void player_turn(struct player *player);
 void computer_turn (struct player *player);
 #endif// PLR_H_INCLUDED
