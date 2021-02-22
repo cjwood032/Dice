@@ -21,7 +21,6 @@ int main()
         pcard = &sc;
         init_card(pcard);
         cards[i] = *pcard;
-        printf("%s name\n",pcard->playerinfo->name);
     }
     for (int i = 0; i < number; i++)
     {
@@ -49,7 +48,12 @@ int main()
         player->dice[2] = 1;
         player->dice[3] = 5;
         player->dice[4] = 4;
-        score_top(1, pcard);
+        printf("above score dice\n");
+        score_dice(pcard);
+        score_dice(pcard);
+        score_dice(pcard);
+        score_dice(pcard);
+        /*
         player->dice[0] = 2;
         player->dice[1] = 2;
         player->dice[2] = 2;
@@ -82,14 +86,14 @@ int main()
         score_top(6, pcard);
         score_bot("three",pcard);
         score_bot("four",pcard);
-       /*
+       
         player->dice[0] = 6;
         player->dice[1] = 6;
         player->dice[2] = 6;
         player->dice[3] = 5;
         player->dice[4] = 4;
         score_bot("three",pcard);
-        */
+        
         player->dice[0] = 5;
         player->dice[1] = 5;
         player->dice[2] = 5;
@@ -102,7 +106,7 @@ int main()
         score_bot("large",pcard);
         score_bot("yahtzee",pcard);
         score_bot("chance",pcard);
-        /*
+        
         if (sc.playerinfo->human)
         {
             

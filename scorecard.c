@@ -381,7 +381,25 @@ void total_bot(struct scorecard *card)
 void score_dice(struct scorecard *card)
 {
     display_scorecard(card);
-    scanf("what would you like to score?\n");
+    char input[10];
+    printf("what would you like to score?\n");
+    printf("Enter the number if you want to score aces(1)-sixes(6) for the top section\n");
+    printf("or three, four, house, small, large, yahtzee, or chance for the bottom\n");
+    scanf("%s",input);
+    if(strlen(input)==1)
+    {
+        int choice = atoi(input);
+        if(choice ==1&&!ACES||choice ==2&&!TWOS||choice ==3&&!THREES||choice ==4&&!FOURS||choice ==5&&!FIVES||choice ==6&&!SIXES)
+        {
+            score_top(choice,card);
+        }
+        else
+        {
+            printf("Please select a valid choice.\n");
+            sleep(2);
+            score_dice(card);
+        }
+    }
 
 }
 
