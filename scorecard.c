@@ -389,13 +389,26 @@ void score_dice(struct scorecard *card)
     if(strlen(input)==1)
     {
         int choice = atoi(input);
-        if(choice ==1&&!ACES||choice ==2&&!TWOS||choice ==3&&!THREES||choice ==4&&!FOURS||choice ==5&&!FIVES||choice ==6&&!SIXES)
+        if((choice ==1&&!ACES)||(choice ==2&&!TWOS)||(choice ==3&&!THREES)||(choice ==4&&!FOURS)||(choice ==5&&!FIVES)||(choice ==6&&!SIXES))
         {
             score_top(choice,card);
         }
         else
         {
-            printf("Please select a valid choice.\n");
+            printf("\nPlease select a valid choice.\n");
+            sleep(2);
+            score_dice(card);
+        }
+    }
+    else //bottom
+    {
+        if( (strcmp(input,"three")==0&&!THREES)||(strcmp(input,"four")==0&&!FOURS)||(strcmp(input,"house")==0&&!FULLH)||(strcmp(input,"small")==0&&!SMSTR)||(strcmp(input,"large")==0&&!LGSTR)||((strcmp(input,"yahtzee")==0&&!YAHT)||(strcmp(input,"yahtzee")==0&&YAHT&&!YTZBONUS))||(strcmp(input,"chance")==0&&!CHANCE) )
+        {
+            score_bot(input,card);
+        }
+        else
+        {
+            printf("\nPlease select a valid choice.\n");
             sleep(2);
             score_dice(card);
         }

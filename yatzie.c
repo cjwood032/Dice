@@ -46,8 +46,8 @@ int main()
         player->dice[0] = 1;
         player->dice[1] = 1;
         player->dice[2] = 1;
-        player->dice[3] = 5;
-        player->dice[4] = 4;
+        player->dice[3] = 1;
+        player->dice[4] = 1;
         printf("above score dice\n");
         score_dice(pcard);
         score_dice(pcard);
