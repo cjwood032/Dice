@@ -134,7 +134,7 @@ void init_card(struct scorecard *card)
 }
 void display_scorecard(struct scorecard *card)
 {
-    printf("------------------------------------------------------------------\n");
+    printf("\n------------------------------------------------------------------\n");
     printf("||\t\t\t\t%s\t\t\t\t||\n",card->playerinfo->name);
     printf("------------------------------------------------------------------\n");
     printf("||\tUPPER SECTION\t|\tHOW TO SCORE\t|\tSCORE\t||\n");
@@ -218,26 +218,32 @@ void score_top(int selection, struct scorecard *card)
     {
     case 1:
         ACES = 1;
+        YTZBONUS=0;
         ACES_SCORE = count;
         break;
     case 2:
         TWOS = 1;
+        YTZBONUS=0;
         TWOS_SCORE = count * selection;
         break;
     case 3:
         THREES = 1;
+        YTZBONUS=0;
         THREES_SCORE = count * selection;
         break;
     case 4:
         FOURS = 1;
+        YTZBONUS=0;
         FOURS_SCORE = count * selection;
         break;
     case 5:
         FIVES = 1;
+        YTZBONUS=0;
         FIVES_SCORE = count * selection;
     break;
     case 6:
         SIXES = 1;
+        YTZBONUS=0;
         SIXES_SCORE = count * selection;
     break;
     }
@@ -275,6 +281,7 @@ void score_bot(char str[],struct scorecard *card)
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECK3
         TRIPS=1;
+        YTZBONUS=0;
         if(found)
         {
             TRIPS_SCORE=ADD_DICE;
@@ -289,6 +296,7 @@ void score_bot(char str[],struct scorecard *card)
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECK4
         QUADS=1;
+        YTZBONUS=0;
         if(found)
         {
             QUADS_SCORE=ADD_DICE;
@@ -303,6 +311,7 @@ void score_bot(char str[],struct scorecard *card)
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECKH
         FULLH=1;
+        YTZBONUS=0;
         if(found)
         {
             FULLH_SCORE=FULLHOUSE;
@@ -315,6 +324,7 @@ void score_bot(char str[],struct scorecard *card)
     else if (strcmp(str, "small")==0)
     {
         SMSTR=1;
+        YTZBONUS=0;
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECKSM
         if(found)
@@ -329,6 +339,7 @@ void score_bot(char str[],struct scorecard *card)
     else if (strcmp(str, "large")==0)
     {
         LGSTR=1;
+        YTZBONUS=0;
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECKLG
         if(found)
@@ -352,6 +363,10 @@ void score_bot(char str[],struct scorecard *card)
         else if (found && YAHT)
         {
             XTRAYTZ++;
+            YTZBONUS=1;
+            printf("You got a bonus, now score the dice!\n");
+            sleep(2);
+            score_dice(card);
         }
         else
         {
@@ -408,7 +423,7 @@ void score_dice(struct scorecard *card)
     }
     else //bottom
     {
-        if( (strcmp(input,"three")==0&&!THREES)||(strcmp(input,"four")==0&&!FOURS)||(strcmp(input,"house")==0&&!FULLH)||(strcmp(input,"small")==0&&!SMSTR)||(strcmp(input,"large")==0&&!LGSTR)||((strcmp(input,"yahtzee")==0&&!YAHT)||(strcmp(input,"yahtzee")==0&&YAHT&&!YTZBONUS))||(strcmp(input,"chance")==0&&!CHANCE) )
+        if( (strcmp(input,"three")==0&&!THREES)||(strcmp(input,"four")==0&&!FOURS)||(strcmp(input,"house")==0&&!FULLH)||(strcmp(input,"small")==0&&!SMSTR)||(strcmp(input,"large")==0&&!LGSTR)||((strcmp(input,"yahtzee")==0&&!YAHT)||(strcmp(input,"yahtzee")==0&&YAHT_SCORE&&!YTZBONUS))||(strcmp(input,"chance")==0&&!CHANCE) )
         {
             score_bot(input,card);
         }

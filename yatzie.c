@@ -6,6 +6,8 @@
 #include "scorecard.h"
 #define DICE card->playerinfo->dice
 #define ROLLED card->playerinfo->rolled
+#define TOP_COMPLETED (card.Aces&&card.Twos&&card.Threes&&card.Fours&&card.Fives&&card.Sixes) 
+#define BOT_COMPLETED (card.Trips&&card.Quads&&card.FullHouse&&card.SmStraight&&card.LgStraight&&card.Yahtzee&&card.Chance)
 void turn(struct scorecard *card)
 {
    
@@ -17,16 +19,26 @@ void turn(struct scorecard *card)
     {
         swapped=0;
         roll(rolling,ROLLED);
-        printf("\nyou rolled %d dice\n",rolling);
+        
+        if (roll_count==3)
+        {
+            for (;holding<5;holding++)
+            { 
+                DICE[holding]= ROLLED[--rolling];
+            }
+            printf("\n\nfinal roll\t");
+            display_dice(holding,DICE);
+        }
+        while (swap!='Y'&&swap!='N'&&roll_count!=3)
+        {
+            printf("\nyou rolled %d dice\n",rolling);
         display_dice(rolling,ROLLED);
         if(holding)
         {
-            printf("\nyour held %d dice\n",holding);
+            printf("\nyour %d held dice\n",holding);
             display_dice(holding,DICE);
         }
-        while (swap!='Y'&&swap!='N')
-        {
-            printf("\nWould you like to swap dice (Y/N) or take (A)ll the remaining?\n?");
+            printf("\nWould you like to swap dice (Y/N) or take (A)ll the remaining?\n");
             scanf("%c",&swap);
             if (swap=='Y')
             {
@@ -71,9 +83,9 @@ void turn(struct scorecard *card)
 int main()
 {
     int number = 0;
-    int winners = 0;
     int low_score = 31;
     int completed_cards = 0;
+    int turn_counter=0;
     puts("New game of not Yahtzee!\nHow many players?");
     scanf("%i", &number);
     fflush(stdin);
@@ -87,110 +99,28 @@ int main()
         init_card(pcard);
         cards[i] = *pcard;
     }
-    for (int i = 0; i < number; i++)
+    while (completed_cards<number)
     {
-        struct scorecard sc = cards[i];
-        pcard = &sc;
-        player = sc.playerinfo;
-        
-        turn(pcard);
-        // hard code attempt pass
-
-        //roll(5,player->dice);
-        /* Print dice
-        printf("[ ");
-        
-        for (int j =0; j<5; j++)
+        struct scorecard card = cards[turn_counter];
+        pcard = &card;
+        player = card.playerinfo;
+        if(!TOP_COMPLETED||!BOT_COMPLETED)
         {
-             if (j==0)
-            printf("%d ",player->dice[j]);
-        else
-            printf(", %d",player->dice[j]);
+            turn(pcard);
+            if(TOP_COMPLETED&&BOT_COMPLETED)
+            {
+                completed_cards++;
+            }
+            cards[turn_counter] = card;
         }
-        printf("]\n");
-        
-       
-        player->dice[0] = 1;
-        player->dice[1] = 1;
-        player->dice[2] = 1;
-        player->dice[3] = 1;
-        player->dice[4] = 1;
-
-        score_dice(pcard);
-        score_dice(pcard);
-        score_dice(pcard);
-        score_dice(pcard);
-        /*
-        player->dice[0] = 2;
-        player->dice[1] = 2;
-        player->dice[2] = 2;
-        player->dice[3] = 5;
-        player->dice[4] = 4;
-        score_top(2, pcard);
-        player->dice[0] = 3;
-        player->dice[1] = 3;
-        player->dice[2] = 3;
-        player->dice[3] = 5;
-        player->dice[4] = 4;
-        score_top(3, pcard);
-        player->dice[0] = 4;
-        player->dice[1] = 4;
-        player->dice[2] = 1;
-        player->dice[3] = 5;
-        player->dice[4] = 4;
-        score_top(4, pcard);
-        player->dice[0] = 5;
-        player->dice[1] = 5;
-        player->dice[2] = 1;
-        player->dice[3] = 5;
-        player->dice[4] = 4;
-        score_top(5, pcard);
-        player->dice[0] = 6;
-        player->dice[1] = 6;
-        player->dice[2] = 6;
-        player->dice[3] = 6;
-        player->dice[4] = 4;
-        score_top(6, pcard);
-        score_bot("three",pcard);
-        score_bot("four",pcard);
-       
-        player->dice[0] = 6;
-        player->dice[1] = 6;
-        player->dice[2] = 6;
-        player->dice[3] = 5;
-        player->dice[4] = 4;
-        score_bot("three",pcard);
-        
-        player->dice[0] = 5;
-        player->dice[1] = 5;
-        player->dice[2] = 5;
-        player->dice[3] = 5;
-        player->dice[4] = 5;
-        
-        score_bot("yahtzee",pcard);
-        score_bot("house",pcard);
-        score_bot("small",pcard);
-        score_bot("large",pcard);
-        score_bot("yahtzee",pcard);
-        score_bot("chance",pcard);
-        
-        if (sc.playerinfo->human)
+        if (turn_counter==number-1)
         {
-            
-            player_turn(player);
+            turn_counter=0;
         }
         else
         {
-            computer_turn(player);   
+            turn_counter++;
         }
-        if (pcard->playerinfo->score < low_score)
-        {
-            low_score=pcard->playerinfo->score;
-            printf("New low score of %i\n", low_score);
-            sleep(1);
-        }
-        */
-        cards[i] = sc;
     }
 
     return 0;

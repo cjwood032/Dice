@@ -175,11 +175,11 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
     int move = 0;
     
     char input[5];
-    printf("rolled");
+    printf("rolled\t");
     display_dice(inL,inb);
     if(outL)
     {
-        printf("\nheld");
+        printf("\nheld\t");
         display_dice(outL,outb);
     }
     
@@ -192,7 +192,7 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
         if(move<inL)
         {
             outb[outL]=inb[move];
-            printf("pulled %d\n",outb[outL]);
+            //printf("pulled %d\n",outb[outL]);
             for (int count = move;count<inL-1;count++) //move the dice
             {
                 inb[count] = inb[count+1];
@@ -219,7 +219,7 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
             swapped--;
         }
     }
-    else if(strncmp("D",input,1)==0)
+    else if(strncmp("S",input,1)==0)
     {
         return swapped;
     }
