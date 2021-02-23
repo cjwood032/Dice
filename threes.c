@@ -14,7 +14,8 @@ Psuedocode
 #include <stdlib.h>
 #include <unistd.h>
 #include "player.h"
-int main() 
+#include "threes.h"
+void threes() 
 {
     
     int number=0;
@@ -77,5 +78,4 @@ int main()
         {
             printf(" drew the game!\n");
         }
-    return 0;
 }

@@ -15,7 +15,8 @@ Psuedocode
 #include <unistd.h>
 #include "player.h"
 #include <time.h>
-int main() 
+#include "sevens.h"
+void sevens() 
 {
     int number=0;  
     int count=0;
@@ -72,5 +73,4 @@ int main()
         }
     }
     printf("Good game!\n");
-   return 0;
 }

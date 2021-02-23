@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "player.h"
 #include "scorecard.h"
+#include "yatzie.h"
 #define DICE card->playerinfo->dice
 #define ROLLED card->playerinfo->rolled
 #define TOP_COMPLETED (card.Aces&&card.Twos&&card.Threes&&card.Fours&&card.Fives&&card.Sixes) 
@@ -80,7 +81,7 @@ void turn(struct scorecard *card)
     }
     score_dice(card);
 }
-int main()
+void yatzie()
 {
     int number = 0;
     int low_score = 31;
@@ -122,6 +123,5 @@ int main()
             turn_counter++;
         }
     }
-
-    return 0;
+    printf("good game!\n");
 }
