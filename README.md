@@ -2,10 +2,10 @@
 This is a collection of three games. The threes and sevens games allow for computer players as AI opponents. 
 ### Threes-
     Threes is played with 1 or more players each rolling 5 dice. The object of the game is to score as low as possible, with the following rules:
-   1. You must keep at least 1 die per roll and may keep as many as you want.
-   2. Once a die is held, it cannot be rerolled.
-   3. The three-pip side is worth 0 points, all other sides are worth their face value.
-   4. Lowest score wins, ties are possible.
+    1. You must keep at least 1 die per roll and may keep as many as you want.
+    2. Once a die is held, it cannot be rerolled.
+    3. The three-pip side is worth 0 points, all other sides are worth their face value.
+    4. Lowest score wins, ties are possible.
 ### Sevens-
     Sevens is played with 2 or more players. The object of the game is to roll 2 dice and not have them add up to seven.
     1. A player who rolls a 7 is out.
