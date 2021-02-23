@@ -18,6 +18,6 @@ This is a collection of three games. The threes and sevens games allow for compu
 2. Navigate to the project root folder.
 3. run the games with ./games
 4. If changes are desired the following command will rebuild the project using the GCC compiler:
-    gcc -g yatzie.c dice.c player.c scorecard.c threes.c sevens.c games.c -o games44
+    gcc -g yatzie.c dice.c player.c scorecard.c threes.c sevens.c games.c -o games
 
 good luck and have fun!
