@@ -8,7 +8,7 @@ int main()
     while(choice <4)
     {
         printf("Welcome to the dice games!\n");
-        printf("What would you like to play?\n 1. Threes\n 2. Sevens\n 3.Yatzie\nenter number choice:");
+        printf("What would you like to play?\n 1. Threes\n 2. Sevens\n 3. Yatzie\n 4. exit program\nenter number choice:");
         scanf("%d",&choice);
         if(choice==1)
         {
@@ -24,6 +24,10 @@ int main()
         {
             yatzie();
             choice =5;
+        }
+        else if(choice ==4)
+        {
+            break;
         }
         else
         {
