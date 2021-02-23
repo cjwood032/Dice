@@ -40,7 +40,7 @@ void turn(struct scorecard *card)
             display_dice(holding,DICE);
         }
             printf("\nWould you like to swap dice (Y/N) or take (A)ll the remaining?\n");
-            scanf("%c",&swap);
+            scanf(" %c",&swap);
             if (swap=='Y')
             {
                swapped= swap_dice(ROLLED,rolling,DICE,holding,swapped);

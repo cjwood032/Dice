@@ -72,5 +72,6 @@ void sevens()
             count++;
         }
     }
-    printf("Good game!\n");
+    printf("Good game!\nHit enter to exit:\n");
+    sleep(5);
 }

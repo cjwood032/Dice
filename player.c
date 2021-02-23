@@ -14,7 +14,7 @@ void make_player(struct player *player, _Bool option)
     while(input!='C'&&input!='H'&&option)
     {
         puts ("Is this player human or a computer?\nH for human, C for computer");
-        scanf("%c",&input);
+        scanf(" %c",&input);
         fflush(stdin);
     }
     if (toupper(input)=='H'||!option)

@@ -100,12 +100,12 @@ int cmpfunc (const void * a, const void * b)
 
 void init_card(struct scorecard *card)
 {
-    struct player *p;
+    struct player *p=NULL;
+    card->playerinfo = malloc(sizeof(struct player));
     p = card->playerinfo;
     make_player(p,0);
     card->playerinfo = p;
     char *name = p->name;
-    card->playerinfo =malloc(sizeof(struct player));
     strcpy(card -> playerinfo->name,name);
     ROLLED[0]=0;
     ROLLED[1] =0;
@@ -130,7 +130,6 @@ void init_card(struct scorecard *card)
     XTRAYTZ=0;
     YTZBONUS_SCORE=0;
     free(card->playerinfo);
-    
 }
 void display_scorecard(struct scorecard *card)
 {
@@ -403,7 +402,8 @@ void score_dice(struct scorecard *card)
 {
     display_scorecard(card);
     char input[10];
-    printf("what would you like to score?\n");
+    display_dice(5, DICE);
+    printf("\nwhat would you like to score?\n");
     printf("Enter the number if you want to score aces(1)-sixes(6) for the top section\n");
     printf("or three, four, house, small, large, yahtzee, or chance for the bottom\n");
     scanf("%s",input);
