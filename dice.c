@@ -41,83 +41,98 @@ void display_dice(int num, int arr[])
 int select_dice(int num, int *inb, int *outb)
 {
     int keep = 0;
-    if (num<5)
+    char buffer[100];
+    while (!keep)
     {
-        printf("\nyour dice\t");
-        display_dice(5-num,outb);
-    }
-    printf("\nRolled dice\t");
-    display_dice(num,inb);
-    if (num>1)
-    {
-        while (keep==0)
+        if (num<5)
         {
-            puts("\nHow many would you like to keep?\n");
-            scanf("%d",&keep);
-            fflush(stdin);
-            if (keep>num||keep==0)
-            {
-                puts("you must take at least one and cannot take more dice than are available.\n");
-                keep=0;
-            }
+            printf("\nyour dice\t");
+            display_dice(5-num,outb);
         }
-        if (keep==num)
+        printf("\nRolled dice\t");
+        display_dice(num,inb);
+        if (num>1)
         {
-            for(int i =0; i<keep; i++)
+            while (keep==0)
             {
-                outb[5-num+i]=inb[i];
-            }
-            return keep;
-        }
-        int pulled[5]={0,0,0,0,0};
-        for (int i =0; i<keep; i++)
-        {
-            int pull=0;
-            _Bool valid =0;
-            _Bool found = 0;
-            
-            while (!valid)
-            {
-                if (found==1)
+                do
                 {
-                    found = 0;
+                    puts("\nHow many would you like to keep?");
+                    fgets(buffer,101,stdin);
                 }
-                printf("select %d of %d, or -1 if you want to change the number of dice you want to keep\n",i+1,keep);
-                scanf("%d",&pull);
-                fflush(stdin);
-                if (pull==-1)
-                    {
-                        select_dice(num, *&inb, *&outb);
-                    }
-                for (int j=0; j<keep;j++)
+                while (!atoi(buffer));
+                keep = atoi(buffer);
+                if (keep>num||keep==0)
                 {
-                    if(pulled[j]==pull&&pull!=0)
+                    puts("you must take at least one and cannot take more dice than are available.\n");
+                    keep=0;
+                }
+            }
+            if (keep==num)
+            {
+                for(int i =0; i<keep; i++)
+                {
+                    outb[5-num+i]=inb[i];
+                }
+                return keep;
+            }
+            int pulled[5]={0,0,0,0,0};
+            for (int i =0; i<keep; i++)
+            {
+                int pull=0;
+                _Bool valid =0;
+                _Bool found = 0;
+
+                while (!valid)
+                {
+                    if (found==1)
+                    {
+                        found = 0;
+                    }
+
+
+                do
+                {
+                    printf("select %d of %d, enter a number >5 if you want to change the number of dice you want to keep\n",i+1,keep);
+                    fgets(buffer,101,stdin);
+                }
+                while (!atoi(buffer));
+                pull = atoi(buffer);
+                    if (pull>5)
+                        {
+                            keep=0;
+                            break;
+                        }
+                    for (int j=0; j<keep;j++)
+                    {
+                        if(pulled[j]==pull&&pull!=0)
+                        {
+                            found =1;
+                            printf("you can't select the same die more than once!\n");
+                            break;
+
+                        }
+                    }
+                    if (pull-1>=num||pull<=0)
                     {
                         found =1;
-                        printf("you can't select the same die more than once!\n");
-                        break;
-                        
+                        printf("please select an available die!\n");
                     }
+                    if (!found)
+                        {
+                            valid =1;
+                        }
                 }
-                if (pull-1>=num||pull<=0)
-                {
-                    found =1;
-                    printf("please select an available die!\n");
-                }
-                if (!found)
-                    {
-                        valid =1;
-                    }
+                outb[5-num+i]=inb[pull-1];
+                pulled[i]=pull;
+
             }
-            outb[5-num+i]=inb[pull-1];
-            pulled[i]=pull;
-            
         }
-    }
-    else
-    {//if it's the last die there is no choice.
-        keep=1;
-        outb[4]=inb[0];
+        else
+        {//if it's the last die there is no choice.
+            keep=1;
+            outb[4]=inb[0];
+        }
     }
     return keep;
 
@@ -173,8 +188,10 @@ int compute_dice(int num, int *inb, int *outb)
 int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
 {
     int move = 0;
+    _Bool valid =0;
+    char direction;
     
-    char input[5];
+    char buffer[100];
     printf("rolled\t");
     display_dice(inL,inb);
     if(outL)
@@ -183,16 +200,36 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
         display_dice(outL,outb);
     }
     
-    printf("\nwhat would you like to swap or woukld you like to (S)top?\n(R)olled or (H)eld + the die number you wish to swap\nex.\"R1\" would hold the first rolled die\n");
-    scanf("%s",input);
-    if(strncmp("R",input,1)==0)
+    
+    while(!valid)
     {
-        input[0]=' ';
-        move=atoi(input)-1;
+        int i = 1;
+        printf("\nwhat would you like to swap\nMove from (R)olled or (H)eld or would you like to (S)top?\n");
+        fgets(buffer,101,stdin);              
+        direction=buffer[0];
+        while(direction!='R'&&direction!='H'&&direction!='S'&&direction==' ')//clear buffer in case of 
+        {
+            direction=buffer[i++];
+        }
+        
+        if (direction=='R'||direction=='H'||direction=='S')
+        {
+            valid=1;
+        }           
+    }
+    if(direction=='R')
+    {
+        do
+        {
+            puts("Which die?");
+            fgets(buffer,101,stdin);
+        }
+        while(!atoi(buffer));
+        move=atoi(buffer)-1;
         if(move<inL)
         {
             outb[outL]=inb[move];
-            //printf("pulled %d\n",outb[outL]);
+            printf("%i pulled %d\n",move,outb[outL]);
             for (int count = move;count<inL-1;count++) //move the dice
             {
                 inb[count] = inb[count+1];
@@ -203,10 +240,16 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
         }
 
     }
-    else if(strncmp("H",input,1)==0)
+    else if(direction=='H')
     {
-        input[0]=' ';
-        move=atoi(input)-1;
+        direction=' ';
+        do
+        {
+            puts("Which die?");
+            fgets(buffer,101,stdin);
+        }
+        while(!atoi(buffer));
+        move=atoi(buffer)-1;
         if(move<outL)
         {
             inb[inL]=outb[move];
@@ -219,7 +262,7 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
             swapped--;
         }
     }
-    else if(strncmp("S",input,1)==0)
+    else if(direction=='S')
     {
         return swapped;
     }

@@ -18,13 +18,19 @@ Psuedocode
 #include "sevens.h"
 void sevens() 
 {
+    char buffer[100];
     int number=0;  
     int count=0;
     int score=0;
     int remaining=0;
-    puts("New game of sevens!\nHow many players?");
-    scanf("%i", &number);
-    remaining=number;
+    puts("New game of sevens!");
+    do
+    {
+        puts("How many players?");
+        fgets(buffer,101,stdin);
+    }
+    while(!atoi(buffer));
+    remaining=number=atoi(buffer);
     fflush(stdin);
     struct player players[number];
     struct player *p=NULL;

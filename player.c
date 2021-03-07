@@ -10,12 +10,18 @@ const char *Names[10] = {"Bill", "Karen", "Ada", "Buzz", "Brian","Sophie","Edwar
  
 void make_player(struct player *player, _Bool option)
 {
+    char buffer[100];
+    int i = 1;
     char input;
     while(input!='C'&&input!='H'&&option)
     {
         puts ("Is this player human or a computer?\nH for human, C for computer");
-        scanf(" %c",&input);
-        fflush(stdin);
+        fgets(buffer,101,stdin);
+        input=buffer[0];
+         while(input==' '||input=='\n')//clear buffer in case of 
+            {
+                input=buffer[i++];
+            }
     }
     if (toupper(input)=='H'||!option)
     {
@@ -23,8 +29,12 @@ void make_player(struct player *player, _Bool option)
         char name[20];
         player->human=1;
         puts("Enter player's name:");
-        scanf("%s", name);
-        fflush(stdin);
+        fgets(buffer,101,stdin);
+        i=0;
+        while (buffer[i]!='\n'&&i<20)
+        {
+            name[i]=buffer[i++];
+        }
         strcpy(player->name,name);
     }
     else if(toupper(input)=='C')

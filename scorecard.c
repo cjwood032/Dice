@@ -275,7 +275,7 @@ void total_top(struct scorecard *card)
 }
 void score_bot(char str[],struct scorecard *card)
 {
-    if(strcmp(str, "three")==0)
+    if(strncmp(str, "three",5)==0)
     {
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECK3
@@ -290,7 +290,7 @@ void score_bot(char str[],struct scorecard *card)
             TRIPS_SCORE=0;
         }
     }
-    else if(strcmp(str, "four")==0)
+    else if(strncmp(str, "four",4)==0)
     {
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECK4
@@ -305,7 +305,7 @@ void score_bot(char str[],struct scorecard *card)
             QUADS_SCORE=0;
         }
     }
-    else if(strcmp(str, "house")==0)
+    else if(strncmp(str, "house",5)==0)
     {
         qsort(DICE, 5, sizeof(int), cmpfunc);
         CHECKH
@@ -320,7 +320,7 @@ void score_bot(char str[],struct scorecard *card)
             FULLH_SCORE=0;
         }
     }
-    else if (strcmp(str, "small")==0)
+    else if (strncmp(str, "small",5)==0)
     {
         SMSTR=1;
         YTZBONUS=0;
@@ -335,7 +335,7 @@ void score_bot(char str[],struct scorecard *card)
             SMSTR_SCORE=0;
         }
     }
-    else if (strcmp(str, "large")==0)
+    else if (strncmp(str, "large",5)==0)
     {
         LGSTR=1;
         YTZBONUS=0;
@@ -350,7 +350,7 @@ void score_bot(char str[],struct scorecard *card)
             LGSTR_SCORE=0;
         }
     }
-    else if (strcmp(str,"yahtzee")==0)
+    else if (strncmp(str,"yahtzee",7)==0)
     {
         
         CHECKY
@@ -375,7 +375,7 @@ void score_bot(char str[],struct scorecard *card)
             YTZBONUS_SCORE=0;
         }
     }
-    else if(strcmp(str, "chance")==0)
+    else if(strncmp(str, "chance",6)==0)
     {
         CHANCE=1;
         CHANCE_SCORE=ADD_DICE;
@@ -400,16 +400,18 @@ void total_bot(struct scorecard *card)
 }
 void score_dice(struct scorecard *card)
 {
+    char buffer [100];
     display_scorecard(card);
     char input[10];
     display_dice(5, DICE);
     printf("\nwhat would you like to score?\n");
     printf("Enter the number if you want to score aces(1)-sixes(6) for the top section\n");
     printf("or three, four, house, small, large, yahtzee, or chance for the bottom\n");
-    scanf("%s",input);
-    if(strlen(input)==1)
+    fgets(buffer,101,stdin);
+    
+    if(atoi(buffer))
     {
-        int choice = atoi(input);
+        int choice = atoi(buffer);
         if((choice ==1&&!ACES)||(choice ==2&&!TWOS)||(choice ==3&&!THREES)||(choice ==4&&!FOURS)||(choice ==5&&!FIVES)||(choice ==6&&!SIXES))
         {
             score_top(choice,card);
@@ -423,7 +425,19 @@ void score_dice(struct scorecard *card)
     }
     else //bottom
     {
-        if( (strcmp(input,"three")==0&&!THREES)||(strcmp(input,"four")==0&&!FOURS)||(strcmp(input,"house")==0&&!FULLH)||(strcmp(input,"small")==0&&!SMSTR)||(strcmp(input,"large")==0&&!LGSTR)||((strcmp(input,"yahtzee")==0&&!YAHT)||(strcmp(input,"yahtzee")==0&&YAHT_SCORE&&!YTZBONUS))||(strcmp(input,"chance")==0&&!CHANCE) )
+        for (int i =0; i<10; i++)
+        {
+            if (buffer[i]=='\n')
+            {
+                break;
+            }
+            else
+            {
+                input[i]=buffer[i];
+            }
+        }
+        printf("%s\n",input);
+        if( (strncmp(input,"three",5)==0&&!THREES)||(strncmp(input,"four",4)==0&&!FOURS)||(strncmp(input,"house",5)==0&&!FULLH)||(strncmp(input,"small",5)==0&&!SMSTR)||(strncmp(input,"large",5)==0&&!LGSTR)||((strncmp(input,"yahtzee",7)==0&&!YAHT)||(strncmp(input,"yahtzee",7)==0&&YAHT_SCORE&&!YTZBONUS))||(strncmp(input,"chance",6)==0&&!CHANCE) )
         {
             score_bot(input,card);
         }

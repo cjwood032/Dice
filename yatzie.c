@@ -11,9 +11,10 @@
 #define BOT_COMPLETED (card.Trips&&card.Quads&&card.FullHouse&&card.SmStraight&&card.LgStraight&&card.Yahtzee&&card.Chance)
 void turn(struct scorecard *card)
 {
-   
+    char buffer[100];
     int rolling =5;
     int holding =0;
+    int i =1;
     int swapped;
     char swap = 'X';
     for(int roll_count = 1; roll_count<=3;roll_count++)
@@ -40,7 +41,12 @@ void turn(struct scorecard *card)
             display_dice(holding,DICE);
         }
             printf("\nWould you like to swap dice (Y/N) or take (A)ll the remaining?\n");
-            scanf(" %c",&swap);
+            fgets(buffer,101,stdin);
+            swap=buffer[0];
+            while(swap==' '||swap=='\n')//clear buffer in case of 
+            {
+                swap=buffer[i++];
+            }
             if (swap=='Y')
             {
                swapped= swap_dice(ROLLED,rolling,DICE,holding,swapped);
@@ -83,13 +89,19 @@ void turn(struct scorecard *card)
 }
 void yatzie()
 {
+    char buffer[100];
     int number = 0;
     int low_score = 31;
     int completed_cards = 0;
     int turn_counter=0;
-    puts("New game of not Yahtzee!\nHow many players?");
-    scanf("%i", &number);
-    fflush(stdin);
+    puts("New game of not Yahtzee!");
+    do
+    {
+        puts("How many players?");
+        fgets(buffer,101,stdin);
+    }
+    while(!atoi(buffer));
+    number=atoi(buffer);
     struct scorecard cards[number];
     struct scorecard *pcard = NULL;
     struct player *player = NULL;

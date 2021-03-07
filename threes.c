@@ -19,11 +19,17 @@ void threes()
 {
     
     int number=0;
+    char buffer[100];
     int winners =0;
     int low_score=31;
-    puts("New game of threes!\nHow many players?");
-    scanf("%i", &number);
-    fflush(stdin);
+    puts("New game of threes!"); 
+    do
+    {
+        puts("How many players?");
+        fgets(buffer,101,stdin);
+    }
+    while(!atoi(buffer));
+    number=atoi(buffer);
     struct player players[number];
     struct player *p=NULL;
     for (int i =0;i<number;i++)
