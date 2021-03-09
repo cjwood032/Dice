@@ -187,37 +187,36 @@ int compute_dice(int num, int *inb, int *outb)
 
 int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
 {
+    //inb and outb are the dice arrays. In is rolled out is held
+    //inL and outL are the length of those arrays to avoid needing to calculate the length every time.
+    //swapped is returned as the magnitude and direction of the number of dice swapped. + is rolled->held
     int move = 0;
     _Bool valid =0;
     char direction;
-    
     char buffer[100];
     printf("rolled\t");
     display_dice(inL,inb);
-    if(outL)
+    if(outL)//No reason to display an empty set of dice
     {
         printf("\nheld\t");
         display_dice(outL,outb);
     }
-    
-    
     while(!valid)
     {
         int i = 1;
         printf("\nwhat would you like to swap\nMove from (R)olled or (H)eld or would you like to (S)top?\n");
         fgets(buffer,101,stdin);              
-        direction=buffer[0];
-        while(direction!='R'&&direction!='H'&&direction!='S'&&direction==' ')//clear buffer in case of 
-        {
+        direction=buffer[0]; //get first character from stdin, it should be R, H, or S
+        while(direction==' ')//clear buffer in case of whitespaces
+        {// removed direction!='R'&&direction!='H'&&direction!='S' from while loop to prevent garbage chars from causing false hits
             direction=buffer[i++];
         }
-        
-        if (direction=='R'||direction=='H'||direction=='S')
+        if (direction=='R'||direction=='H'||direction=='S') //If we get a correct character
         {
-            valid=1;
+            valid=1; //valid choice breaks the loop
         }           
     }
-    if(direction=='R')
+    if(direction=='R'||direction=='H')
     {
         do
         {
@@ -226,7 +225,7 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
         }
         while(!atoi(buffer));
         move=atoi(buffer)-1;
-        if(move<inL)
+        if((move<inL&&direction=='R'))
         {
             outb[outL]=inb[move];
             printf("%i pulled %d\n",move,outb[outL]);
@@ -238,21 +237,9 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
             outL++;
             swapped++;
         }
-
-    }
-    else if(direction=='H')
-    {
-        direction=' ';
-        do
+        else if ((move<outL&&direction=='H'))
         {
-            puts("Which die?");
-            fgets(buffer,101,stdin);
-        }
-        while(!atoi(buffer));
-        move=atoi(buffer)-1;
-        if(move<outL)
-        {
-            inb[inL]=outb[move];
+             inb[inL]=outb[move];
             for (int count = move;count<outL-1;count++) //move the dice
             {
                 outb[count] = outb[count+1];
@@ -261,6 +248,11 @@ int swap_dice(int *inb, int inL, int *outb,int outL,int swapped)
             outL--;
             swapped--;
         }
+        else
+        {
+            printf("invalid selection, %i is not available\n",move+1);
+        }
+
     }
     else if(direction=='S')
     {
