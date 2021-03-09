@@ -10,10 +10,9 @@
     for (; i<=num-1;i++)
     {
         arr[i]=rand()%6 + 1;
-    }
-    
+    }   
 }
-int final_score(int arr[])
+int final_score(int arr[]) //for the threes game
 {
     int sum=0;
     for(int i=0; i<5; i++)
@@ -36,9 +35,8 @@ void display_dice(int num, int arr[])
             printf("\tDie #%d: %d", i+1,arr[i]);
         i++;
     }
-    
 }
-int select_dice(int num, int *inb, int *outb)
+int select_dice(int num, int *inb, int *outb)//Human player threes game
 {
     int keep = 0;
     char buffer[100];
@@ -51,7 +49,7 @@ int select_dice(int num, int *inb, int *outb)
         }
         printf("\nRolled dice\t");
         display_dice(num,inb);
-        if (num>1)
+        if (num>1)//if they only have 1 left there is no choice to be made.
         {
             while (keep==0)
             {
@@ -68,7 +66,7 @@ int select_dice(int num, int *inb, int *outb)
                     keep=0;
                 }
             }
-            if (keep==num)
+            if (keep==num)//keeping all the remaining dice
             {
                 for(int i =0; i<keep; i++)
                 {
@@ -89,8 +87,6 @@ int select_dice(int num, int *inb, int *outb)
                     {
                         found = 0;
                     }
-
-
                 do
                 {
                     printf("select %d of %d, enter a number >5 if you want to change the number of dice you want to keep\n",i+1,keep);
@@ -101,7 +97,7 @@ int select_dice(int num, int *inb, int *outb)
                     if (pull>5)
                         {
                             keep=0;
-                            break;
+                            break;//breaks out of the nested for loop and returns to the while
                         }
                     for (int j=0; j<keep;j++)
                     {
@@ -125,11 +121,10 @@ int select_dice(int num, int *inb, int *outb)
                 }
                 outb[5-num+i]=inb[pull-1];
                 pulled[i]=pull;
-
             }
         }
         else
-        {//if it's the last die there is no choice.
+        {//if it's the last die.
             keep=1;
             outb[4]=inb[0];
         }
@@ -137,7 +132,7 @@ int select_dice(int num, int *inb, int *outb)
     return keep;
 
 }
-int compute_dice(int num, int *inb, int *outb)
+int compute_dice(int num, int *inb, int *outb)// computer player threes game
 {
     int keep = 0;
     int lowest = 6;
@@ -166,17 +161,17 @@ int compute_dice(int num, int *inb, int *outb)
                 lowest = inb[i];
             }
         }
-        if(found_threes)
+        if(found_threes) //keep all rolled threes
         {
             keep = threes;
         }
-        else
+        else // or keep the lowest roll. 
         {
             outb[5-num]=lowest;
             keep=1;
         }
     }
-    else
+    else //last die is kept by default.
     {
         keep=1;
         outb[4]=inb[0];
